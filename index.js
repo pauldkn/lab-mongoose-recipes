@@ -20,37 +20,29 @@ mongoose
   })
   .then(x => {
     console.log("Connected to the database");
-    Recipe.create(pauloRecipe)
-      .then(recipe => {
-        console.log(recipe.title);
-        Recipe.insertMany(data)
-          .then(recipes => {
-            recipes.forEach(recipe => console.log(recipe.title));
-            Recipe.updateOne(
-              { title: "Rigatoni alla Genovese" },
-              { duration: 100 }
-            )
-              .then(updatedRecipe => {
-                console.log(updatedRecipe);
-                Recipe.deleteOne({ title: "Carrot Cake" })
-                  .then(() => {
-                    console.log("Carrot cake deleted");
-                    mongoose.connection
-                      .close()
-                      .then(() => {
-                        console.log("closed");
-                      })
-                      .catch(err => console.log("Error closing", err));
-                  })
-                  .catch(err => console.log(err));
-              })
-              .catch(err => console.log(err));
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+    return Recipe.create(pauloRecipe)
+  .then(recipe => {
+    console.log(recipe.title);
+    return Recipe.insertMany(data)
+  .then(recipes => {
+    recipes.forEach(recipe => console.log(recipe.title));
+    return Recipe.updateOne(
+      { title: "Rigatoni alla Genovese" },
+      { duration: 100 }
+    )
+  .then(updatedRecipe => {
+    console.log(updatedRecipe);
+    return Recipe.deleteOne({ title: "Carrot Cake" })
+  .then(() => {
+    console.log("Carrot cake deleted");
+    mongoose.connection
+    .close()
+    .then(() => {
+      console.log("closed");
+    })
+  .catch(err => {
+    console.error("Error connecting to mongo", err);
   })
-  .catch(err => console.log(err));
 
 
 // // Connection to the database "recipeApp"
